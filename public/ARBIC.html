@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ملخص شامل في اللغة العربية</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Kufi+Arabic:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Chosen Palette: Warm Neutrals -->
+    <!-- Application Structure Plan: تم تصميم التطبيق كصفحة واحدة (SPA) مع نظام تنقل علوي (Tabs) للانتقال السلس بين الأقسام الرئيسية: الرئيسية، النحو والصرف، البلاغة والنقد، الأدب، وطرق التدريس. يبدأ المستخدم بنظرة عامة مرئية (مخطط دائري) توضح تركيز المحتوى على النحو والصرف، ثم يمكنه التعمق في كل قسم. تم اختيار هذا الهيكل لتقسيم المحتوى المعقد إلى وحدات قابلة للاستيعاب، مما يسهل على المستخدم التركيز والتنقل دون الشعور بالارتباك. التفاعل (مثل فتح البطاقات) يشجع على الاستكشاف النشط. -->
+    <!-- Visualization & Content Choices: 
+        - نظرة عامة: Goal: Inform. Viz: Donut Chart (Chart.js). Interaction: Hover tooltips. Justification: To visually represent the user's requested content weight (60-70% on Grammar).
+        - النحو والصرف: Goal: Organize/Explain. Viz: Interactive Cards (HTML/CSS). Interaction: Click-to-reveal content. Justification: Breaks down dense topics into manageable, user-triggered chunks.
+        - البلاغة والنقد: Goal: Compare/Inform. Viz: Grid of static cards. Interaction: Hover effects. Justification: Allows for quick comparison of rhetorical devices.
+        - الأدب: Goal: Show change. Viz: Vertical Timeline (HTML/CSS). Interaction: Content grouped by era. Justification: Intuitive way to represent historical progression of literature.
+        - طرق التدريس: Goal: Inform. Viz: List format. Interaction: None. Justification: Simple, direct presentation for straightforward content.
+    -->
+    <!-- CONFIRMATION: NO SVG graphics used. NO Mermaid JS used. -->
+    <style>
+        body {
+            font-family: 'Noto Kufi Arabic', sans-serif;
+            background-color: #FDFCFB;
+            color: #4A4A4A;
+        }
+        .nav-link {
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+        .nav-link.active {
+            color: #A47551;
+            border-bottom-color: #A47551;
+        }
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.05), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+        }
+        .content-section {
+            display: none;
+        }
+        .content-section.active {
+            display: block;
+        }
+        .interactive-card-header {
+            cursor: pointer;
+        }
+        .interactive-card-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease-out;
+        }
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            right: 1.25rem;
+            width: 4px;
+            background-color: #E5D9D0;
+            border-radius: 2px;
+            transform: translateX(50%);
+        }
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            top: 0.75rem;
+            right: 1.25rem;
+            width: 1.25rem;
+            height: 1.25rem;
+            background-color: #FDFCFB;
+            border: 4px solid #A47551;
+            border-radius: 50%;
+            z-index: 10;
+            transform: translateX(50%);
+        }
+    </style>
+</head>
+<body class="antialiased">
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <header class="text-center mb-8">
+            <h1 class="text-4xl font-bold text-[#A47551]">ملخص شامل في اللغة العربية</h1>
+            <p class="text-lg text-gray-600 mt-2">مرجعك التفاعلي لاستكشاف أهم محاور التخصص</p>
+        </header>
+
+        <nav class="bg-white/80 backdrop-blur-md shadow-sm rounded-lg p-4 mb-8 sticky top-4 z-50 flex justify-center items-center space-x-4 sm:space-x-8">
+            <a href="#home" class="nav-link active font-medium pb-2 px-2" data-target="home">الرئيسية</a>
+            <a href="#grammar" class="nav-link font-medium pb-2 px-2" data-target="grammar">النحو والصرف</a>
+            <a href="#rhetoric" class="nav-link font-medium pb-2 px-2" data-target="rhetoric">البلاغة والنقد</a>
+            <a href="#literature" class="nav-link font-medium pb-2 px-2" data-target="literature">الأدب</a>
+            <a href="#teaching" class="nav-link font-medium pb-2 px-2" data-target="teaching">طرق التدريس</a>
+        </nav>
+
+        <main>
+            <!-- قسم الرئيسية -->
+            <section id="home" class="content-section active">
+                <div class="bg-white rounded-lg shadow-md p-6 mb-8 text-center">
+                    <h2 class="text-2xl font-semibold text-[#A47551] mb-4">نظرة عامة على المحتوى</h2>
+                    <p class="text-gray-700 max-w-2xl mx-auto">
+                        تم تصميم هذا الملخص ليكون دليلك في رحلة مراجعة أهم جوانب اللغة العربية. بناءً على طلبك، تم التركيز بشكل كبير على النحو والصرف، حيث يشكلان الجزء الأكبر من المحتوى، مع تغطية شاملة للمحاور الأخرى كالبلاغة والأدب وطرق التدريس. استخدم القائمة أعلاه للتنقل بين الأقسام واستكشاف كل موضوع بتعمق.
+                    </p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8 items-center">
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-xl font-semibold text-center mb-4">توزيع محاور التخصص</h3>
+                        <div class="chart-container relative h-80 max-h-80 w-full max-w-md mx-auto">
+                            <canvas id="topicsChart"></canvas>
+                        </div>
+                    </div>
+                    <div class="space-y-4">
+                        <div class="card bg-white rounded-lg shadow-md p-6">
+                            <h3 class="text-xl font-semibold text-[#A47551]">النحو والصرف</h3>
+                            <p class="mt-2 text-gray-600">أساس فهم بنية الجملة العربية. استكشف الأبواب الرئيسية للإعراب، المشتقات، وقواعد الصرف الأساسية.</p>
+                        </div>
+                        <div class="card bg-white rounded-lg shadow-md p-6">
+                            <h3 class="text-xl font-semibold text-[#A47551]">البلاغة والنقد</h3>
+                            <p class="mt-2 text-gray-600">تعمق في جماليات اللغة، من خلال الصور البلاغية كالتشبيه والاستعارة، والمحسنات البديعية التي تزين النص.</p>
+                        </div>
+                        <div class="card bg-white rounded-lg shadow-md p-6">
+                            <h3 class="text-xl font-semibold text-[#A47551]">الأدب عبر العصور</h3>
+                             <p class="mt-2 text-gray-600">رحلة عبر الزمن لاستكشاف أهم العصور الأدبية وأبرز الشعراء الذين شكلوا تاريخ الأدب العربي.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- قسم النحو والصرف -->
+            <section id="grammar" class="content-section">
+                <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                    <h2 class="text-2xl font-semibold text-[#A47551] mb-4">النحو والصرف: أساس اللغة</h2>
+                    <p class="text-gray-700">يعد النحو والصرف العمود الفقري للغة العربية، حيث يهتم الأول بضبط أواخر الكلمات وعلاقاتها داخل الجملة (الإعراب)، بينما يركز الثاني على بنية الكلمة ذاتها وما يطرأ عليها من تغييرات (الأوزان والمشتقات). انقر على كل قسم أدناه لعرض التفاصيل.</p>
+                </div>
+                <div class="space-y-4">
+                    <div class="interactive-card bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="interactive-card-header p-5 flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-800">الأبواب الرئيسية في النحو (الإعراب)</h3>
+                            <span class="text-2xl text-[#A47551] transform transition-transform duration-300">&#9662;</span>
+                        </div>
+                        <div class="interactive-card-content px-5 pb-5">
+                            <ul class="list-disc list-inside space-y-2 text-gray-600">
+                                <li><strong>المرفوعات:</strong> وتشمل الفاعل، نائب الفاعل، المبتدأ، الخبر، اسم كان وأخواتها، وخبر إن وأخواتها.</li>
+                                <li><strong>المنصوبات:</strong> وتشمل المفاعيل (به، فيه، معه، مطلق، لأجله)، الحال، التمييز، المستثنى، المنادى، خبر كان، واسم إن.</li>
+                                <li><strong>المجرورات:</strong> وتشمل الاسم المجرور بحرف الجر والمجرور بالإضافة (المضاف إليه).</li>
+                                <li><strong>التوابع:</strong> وهي كلمات تتبع ما قبلها في الإعراب وتشمل: النعت، العطف، التوكيد، والبدل.</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div class="interactive-card bg-white rounded-lg shadow-md overflow-hidden">
+                        <div class="interactive-card-header p-5 flex justify-between items-center">
+                            <h3 class="text-lg font-semibold text-gray-800">المشتقات في الصرف</h3>
+                            <span class="text-2xl text-[#A47551] transform transition-transform duration-300">&#9662;</span>
+                        </div>
+                         <div class="interactive-card-content px-5 pb-5">
+                            <p class="mb-2 text-gray-700">المشتقات هي أسماء مأخوذة من الفعل للدلالة على معنى مرتبط به. وأشهرها:</p>
+                            <ul class="list-disc list-inside space-y-2 text-gray-600">
+                                <li><strong>اسم الفاعل:</strong> يدل على من قام بالفعل (مثال: كَاتِب من الفِعل كَتَبَ).</li>
+                                <li><strong>اسم المفعول:</strong> يدل على من وقع عليه الفعل (مثال: مَكْتُوب من الفِعل كَتَبَ).</li>
+                                <li><strong>صيغ المبالغة:</strong> تدل على كثرة حدوث الفعل (أوزانها: فَعّال، مِفْعال، فَعول، فَعيل، فَعِل).</li>
+                                <li><strong>اسم الزمان والمكان:</strong> يدلان على زمان أو مكان وقوع الفعل (مثال: مَطْلَع، مَوْعِد).</li>
+                                <li><strong>اسم الآلة:</strong> يدل على الأداة التي يُؤدى بها الفعل (مثال: مِفْتاح، مِنْشار).</li>
+                                <li><strong>اسم التفضيل:</strong> يستخدم للمقارنة بين شيئين، على وزن "أَفْعَل" (مثال: أَكْبَر، أَجْمَل).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            
+            <!-- قسم البلاغة والنقد -->
+            <section id="rhetoric" class="content-section">
+                <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                     <h2 class="text-2xl font-semibold text-[#A47551] mb-4">البلاغة والنقد: جماليات النص</h2>
+                    <p class="text-gray-700">البلاغة هي فن مطابقة الكلام لمقتضى الحال، وهي تنقسم إلى ثلاثة علوم رئيسية: علم البيان، وعلم البديع، وعلم المعاني. يركز هذا القسم على أبرز الصور والمحسنات التي تمنح النص الأدبي قوته وتأثيره.</p>
+                </div>
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                    <div class="card bg-white rounded-lg shadow-md p-6">
+                        <h3 class="font-bold text-xl mb-2 text-[#A47551]">التشبيه</h3>
+                        <p class="text-gray-700">عقد مماثلة بين شيئين (المشبه والمشبه به) يشتركان في صفة واحدة أو أكثر (وجه الشبه) بأداة تشبيه. مثال: "العلمُ كالنورِ في الهداية".</p>
+                    </div>
+                    <div class="card bg-white rounded-lg shadow-md p-6">
+                        <h3 class="font-bold text-xl mb-2 text-[#A47551]">الاستعارة</h3>
+                        <p class="text-gray-700">تشبيه بليغ حُذف أحد طرفيه (المشبه أو المشبه به). وهي نوعان: تصريحية (صُرّح بالمشبه به) ومكنية (حُذف المشبه به). مثال: "رأيت أسداً يحارب" (تصريحية، شبه الجندي بالأسد).</p>
+                    </div>
+                    <div class="card bg-white rounded-lg shadow-md p-6">
+                        <h3 class="font-bold text-xl mb-2 text-[#A47551]">الكناية</h3>
+                        <p class="text-gray-700">لفظ أُطلق وأُريد به لازم معناه مع جواز إرادة المعنى الأصلي. مثال: "فلان كثير الرماد" كناية عن الكرم.</p>
+                    </div>
+                    <div class="card bg-white rounded-lg shadow-md p-6">
+                        <h3 class="font-bold text-xl mb-2 text-[#A47551]">الطباق</h3>
+                        <p class="text-gray-700">الجمع بين الشيء وضده في الكلام (محسن بديعي معنوي). مثال: "يُحْيِي وَيُمِيتُ".</p>
+                    </div>
+                     <div class="card bg-white rounded-lg shadow-md p-6">
+                        <h3 class="font-bold text-xl mb-2 text-[#A47551]">المقابلة</h3>
+                        <p class="text-gray-700">أن يؤتى بمعنيين أو أكثر ثم يؤتى بما يقابل ذلك على الترتيب (محسن بديعي معنوي). مثال: "فَلْيَضْحَكُوا قَلِيلًا وَلْيَبْكُوا كَثِيرًا".</p>
+                    </div>
+                    <div class="card bg-white rounded-lg shadow-md p-6">
+                        <h3 class="font-bold text-xl mb-2 text-[#A47551]">الجناس</h3>
+                        <p class="text-gray-700">تشابه لفظين في النطق واختلافهما في المعنى (محسن بديعي لفظي). مثال: "وَيَوْمَ تَقُومُ السَّاعَةُ يُقْسِمُ الْمُجْرِمُونَ مَا لَبِثُوا غَيْرَ سَاعَةٍ".</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- قسم الأدب -->
+            <section id="literature" class="content-section">
+                <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                    <h2 class="text-2xl font-semibold text-[#A47551] mb-4">الأدب: رحلة عبر العصور</h2>
+                    <p class="text-gray-700">يمتد تاريخ الأدب العربي عبر عصور زمنية طويلة، لكل منها خصائصها الفنية والموضوعاتية وأعلامها من الشعراء والكتاب. نستعرض هنا أبرز هذه العصور وأهم شعرائها.</p>
+                </div>
+                <div class="relative wrap overflow-hidden p-10">
+                    <div class="timeline">
+                        <div class="timeline-item mb-8 relative">
+                            <div class="bg-white rounded-lg shadow-md p-6 mr-10">
+                                <h3 class="text-xl font-bold text-[#A47551]">العصر الجاهلي</h3>
+                                <p class="text-sm text-gray-500 mb-2">قبل الإسلام حتى عام 622 م</p>
+                                <p class="text-gray-700">تميز الشعر بالوقوف على الأطلال، الفخر، الهجاء، الحكمة، والوصف. ومن أبرز شعرائه أصحاب المعلقات.</p>
+                                <p class="mt-2 font-semibold">أبرز الشعراء: امرؤ القيس، عنترة بن شداد، زهير بن أبي سلمى، طرفة بن العبد.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item mb-8 relative">
+                            <div class="bg-white rounded-lg shadow-md p-6 mr-10">
+                                <h3 class="text-xl font-bold text-[#A47551]">عصر صدر الإسلام والعصر الأموي</h3>
+                                <p class="text-sm text-gray-500 mb-2">622 م - 750 م</p>
+                                <p class="text-gray-700">تأثر الأدب بالقرآن الكريم والحديث الشريف. ظهر شعر الدعوة الإسلامية والفتوحات، وفي العصر الأموي ظهر شعر النقائض والغزل الصريح والعذري.</p>
+                                <p class="mt-2 font-semibold">أبرز الشعراء: حسان بن ثابت، كعب بن زهير، الفرزدق، جرير، الأخطل، جميل بثينة.</p>
+                            </div>
+                        </div>
+                         <div class="timeline-item mb-8 relative">
+                            <div class="bg-white rounded-lg shadow-md p-6 mr-10">
+                                <h3 class="text-xl font-bold text-[#A47551]">العصر العباسي</h3>
+                                <p class="text-sm text-gray-500 mb-2">750 م - 1258 م</p>
+                                <p class="text-gray-700">عصر ازدهار علمي وأدبي. تجددت موضوعات الشعر وأساليبه، وظهرت أغراض جديدة كالزهد والتصوف والفلسفة.</p>
+                                <p class="mt-2 font-semibold">أبرز الشعراء: أبو نواس، أبو تمام، البحتري، المتنبي، أبو العلاء المعري.</p>
+                            </div>
+                        </div>
+                        <div class="timeline-item relative">
+                            <div class="bg-white rounded-lg shadow-md p-6 mr-10">
+                                <h3 class="text-xl font-bold text-[#A47551]">العصر الحديث</h3>
+                                <p class="text-sm text-gray-500 mb-2">منذ القرن التاسع عشر حتى الآن</p>
+                                <p class="text-gray-700">شهد الأدب نهضة كبيرة بظهور مدارس أدبية متنوعة (الإحياء والبعث، الديوان، أبولّو، المهجر) وتطورات هائلة في الشعر الحر وشعر التفعيلة.</p>
+                                <p class="mt-2 font-semibold">أبرز الشعراء: محمود سامي البارودي، أحمد شوقي، حافظ إبراهيم، خليل مطران، بدر شاكر السياب، نزار قباني، محمود درويش.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- قسم طرق التدريس -->
+            <section id="teaching" class="content-section">
+                 <div class="bg-white rounded-lg shadow-md p-6 mb-8">
+                    <h2 class="text-2xl font-semibold text-[#A47551] mb-4">طرق تدريس اللغة العربية</h2>
+                    <p class="text-gray-700">تطورت طرق تدريس اللغة العربية لتواكب النظريات التربوية الحديثة، متحولة من التركيز على المعلم إلى التركيز على المتعلم. إليك مقارنة بين المنهجيات التقليدية والحديثة.</p>
+                </div>
+                <div class="grid md:grid-cols-2 gap-8">
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-xl font-semibold mb-3 text-center border-b pb-2">الطرق التقليدية</h3>
+                        <ul class="list-disc list-inside space-y-3 text-gray-600">
+                           <li><strong>الطريقة القياسية (الاستنتاجية):</strong> تبدأ بالقاعدة العامة ثم تنتقل إلى الأمثلة التطبيقية. دور المتعلم سلبي ومقتصر على الحفظ.</li>
+                           <li><strong>التركيز على الحفظ والتلقين:</strong> تعتمد على ترديد القواعد وحفظ النصوص دون التركيز على الفهم العميق أو مهارات التفكير.</li>
+                           <li><strong>المعلم هو محور العملية:</strong> المعلم هو المصدر الوحيد للمعلومة، والتواصل غالبًا ما يكون في اتجاه واحد.</li>
+                        </ul>
+                    </div>
+                    <div class="bg-white rounded-lg shadow-md p-6">
+                        <h3 class="text-xl font-semibold mb-3 text-center border-b pb-2">الطرق الحديثة</h3>
+                        <ul class="list-disc list-inside space-y-3 text-gray-600">
+                            <li><strong>الطريقة الاستقرائية:</strong> تبدأ من الأمثلة والجمل، ويستنتج المتعلمون القاعدة بأنفسهم، مما يعزز الفهم والتفكير النقدي.</li>
+                            <li><strong>التعلم النشط والتعاوني:</strong> تشجيع الطلاب على المشاركة من خلال الأنشطة والمجموعات وحل المشكلات.</li>
+                            <li><strong>التدريس التواصلي:</strong> الهدف هو استخدام اللغة كوسيلة للتواصل الفعال، والتركيز على المهارات الأربع (الاستماع، التحدث، القراءة، الكتابة) بشكل متكامل.</li>
+                             <li><strong>استخدام التكنولوجيا:</strong> دمج الأدوات الرقمية والوسائط المتعددة لجعل التعلم أكثر جاذبية وتفاعلية.</li>
+                        </ul>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const navLinks = document.querySelectorAll('.nav-link');
+            const contentSections = document.querySelectorAll('.content-section');
+            const interactiveCards = document.querySelectorAll('.interactive-card');
+
+            navLinks.forEach(link => {
+                link.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    
+                    navLinks.forEach(nav => nav.classList.remove('active'));
+                    this.classList.add('active');
+                    
+                    const targetId = this.getAttribute('data-target');
+                    contentSections.forEach(section => {
+                        if (section.id === targetId) {
+                            section.classList.add('active');
+                        } else {
+                            section.classList.remove('active');
+                        }
+                    });
+                    window.scrollTo(0, 0);
+                });
+            });
+
+            interactiveCards.forEach(card => {
+                const header = card.querySelector('.interactive-card-header');
+                const content = card.querySelector('.interactive-card-content');
+                const icon = header.querySelector('span');
+
+                header.addEventListener('click', () => {
+                    const isOpened = content.style.maxHeight && content.style.maxHeight !== '0px';
+                    if (isOpened) {
+                        content.style.maxHeight = '0px';
+                        icon.style.transform = 'rotate(0deg)';
+                    } else {
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                        icon.style.transform = 'rotate(180deg)';
+                    }
+                });
+            });
+
+            const ctx = document.getElementById('topicsChart').getContext('2d');
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['النحو والصرف', 'البلاغة والنقد', 'الأدب', 'طرق التدريس'],
+                    datasets: [{
+                        label: 'توزيع المحاور',
+                        data: [65, 15, 15, 5],
+                        backgroundColor: [
+                            '#A47551',
+                            '#C7A58C',
+                            '#E5D9D0',
+                            '#BFA18F'
+                        ],
+                        borderColor: '#FDFCFB',
+                        borderWidth: 4,
+                        hoverOffset: 8
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            position: 'bottom',
+                            labels: {
+                                font: {
+                                    family: "'Noto Kufi Arabic', sans-serif",
+                                    size: 14
+                                }
+                            }
+                        },
+                        tooltip: {
+                            callbacks: {
+                                label: function(context) {
+                                    let label = context.label || '';
+                                    if (label) {
+                                        label += ': ';
+                                    }
+                                    if (context.parsed !== null) {
+                                        label += context.parsed + '%';
+                                    }
+                                    return label;
+                                }
+                            }
+                        }
+                    },
+                    cutout: '60%'
+                }
+            });
+        });
+    </script>
+</body>
+</html>
